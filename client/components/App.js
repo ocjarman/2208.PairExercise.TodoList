@@ -3,7 +3,7 @@ import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Todos from './Todos';
 import CreateTodo from './CreateTodo';
 import { connect } from 'react-redux';
-import { fetchTodos } from '../store/effects/effects';
+import { fetchTodos } from '../store/todos';
 
 class App extends Component {
   componentDidMount() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createTodo } from '../store/effects/effects';
+import { createTodo } from '../store/todos';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -37,6 +37,20 @@ class CreateTodo extends Component {
   }
 }
 
+/*
+NOTE: The second argument for both mapStateToProps and mapDispatchToProps is the _actual props_ passed down from the parent.
+
+This is usually denoted as `ownProps`, and since CreateTodo is rendered by our Router component in `App.js`, `CreateTodo` receives all of the history, match, and location props.
+
+We can therefore destructure the `history` prop from the 2nd argument of props.
+
+Another way to have written this would be:
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  createTodo: (todo) => dispatch(createTodo(todo, ownProps.history))
+});
+
+*/
 const mapDispatchToProps = (dispatch, { history }) => ({
   createTodo: (todo) => dispatch(createTodo(todo, history))
 });
