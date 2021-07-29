@@ -1,7 +1,13 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import loggingMiddleware from 'redux-logger';
 import thunk from 'redux-thunk';
-import rootReducer from './reducers/rootReducer';
+import todosReducer from './todos';
+import todoReducer from './todo';
+
+const rootReducer = combineReducers({
+  todos: todosReducer,
+  todo: todoReducer
+});
 
 export default createStore(
   rootReducer,

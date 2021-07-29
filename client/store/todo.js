@@ -1,8 +1,4 @@
-import {
-  SET_TODO
-} from '../constants/constants';
-
-// TODO REDUCER
+const SET_TODO = 'SET_TODO';
 
 export default (state = {}, action) => {
   switch (action.type) {
