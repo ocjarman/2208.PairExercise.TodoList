@@ -21,21 +21,13 @@ const CreateTodo = () => {
     navigate('/');
   }
 
-  const handleTaskNameUpdate = (event) => {
-    setTaskName(event.target.value);
-  }
-
-  const handleAssigneeUpdate = (event) => {
-    setAssignee(event.target.value);
-  }
-
   return (
     <form id='todo-form' onSubmit={handleSubmit}>
       <label htmlFor='taskName'>Task Name:</label>
-      <input name='taskName' value={taskName} onChange={handleTaskNameUpdate} />
+      <input name='taskName' value={taskName} />
 
       <label htmlFor='assignee'>Assign To:</label>
-      <input name='assignee' value={assignee} onChange={handleAssigneeUpdate} />
+      <input name='assignee' value={assignee} />
 
       <button type='submit'>Submit</button>
       <Link to='/'>Cancel</Link>
