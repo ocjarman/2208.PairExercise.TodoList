@@ -1,39 +1,36 @@
-import React, { Component } from 'react';
-import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Routes, Link } from 'react-router-dom';
 import Todos from './Todos';
 import CreateTodo from './CreateTodo';
-import { connect } from 'react-redux';
-import { fetchTodos } from '../store/todos';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTodos } from '../store/todosSlice';
+import axios from 'axios';
 
-class App extends Component {
-  componentDidMount() {
-    this.props.load();
+const App = () => {
+  const todos = useSelector(state => state.todos.todos);
+  const dispatch = useDispatch();
+
+  const fetchTodos = async () => {
+    const { data: todos } = await axios.get('/api/todos');
+    dispatch(setTodos(todos))
   }
 
-  render() {
-    return (
-      <Router>
-        <div id='main'>
-          <h1>
-            <Link to='/'>Todos ({this.props.todos.length})</Link>
-          </h1>
-          <Link to='/todos/create'>Create A New Todo</Link>
-          <Switch>
-            <Route exact path='/' component={Todos} />
-            <Route path='/todos/create' component={CreateTodo} />
-          </Switch>
-        </div>
-      </Router>
-    );
-  }
+  useEffect(() => {
+    fetchTodos();
+  }, [])
+
+  return (
+    <div id='main' >
+      <h1>
+        <Link to='/'>Todos ({todos.length})</Link>
+      </h1>
+      <Link to='/todos/create'>Create A New Todo</Link>
+      <Routes>
+        <Route path='/todos/create' element={<CreateTodo />} />
+        <Route path='/' element={<Todos />} />
+      </Routes>
+    </div>
+  );
 }
 
-const mapStateToProps = ({ todos }) => ({
-  todos
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  load: () => dispatch(fetchTodos())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

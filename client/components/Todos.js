@@ -1,8 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Todos = ({ todos }) => {
+const Todos = () => {
+  const todos = useSelector((state) => state.todos.todos);
+
   return (
     <ul>
       {todos.map((todo) => {

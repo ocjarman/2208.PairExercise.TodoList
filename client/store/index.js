@@ -1,15 +1,10 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import loggingMiddleware from 'redux-logger';
-import thunk from 'redux-thunk';
-import todosReducer from './todos';
-import todoReducer from './todo';
+import { configureStore } from "@reduxjs/toolkit";
+import selectReducer from "./selectSlice";
+import todosReducer from "./todosSlice";
 
-const rootReducer = combineReducers({
-  todos: todosReducer,
-  todo: todoReducer
+export default configureStore({
+  reducer: {
+    todos: todosReducer,
+    select: selectReducer
+  }
 });
-
-export default createStore(
-  rootReducer,
-  applyMiddleware(thunk, loggingMiddleware)
-);
