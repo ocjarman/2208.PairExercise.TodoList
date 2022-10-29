@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { deleteTodo, updateTodo } from "../store/todosSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
-import { setSelectedTodo, selectedTodo } from "../store/selectSlice";
+import { setSelectedTodo } from "../store/selectSlice";
 
 //having trouble getting my useSelector to work. is the problem in my store or in my component or neither?
 const EditToDo = () => {
   //allows us to use 'selected' in the jsx
   const selected = useSelector((state) => state.select.selectedTodo);
+
+  //questions:
+  //would it have been better to reset my 'setTaskName' and 'setAssignee' and pull them in as props?
+  //would it have been better to put these in state? or since we only need them for the update fxn it was fine?
+  const [updatedTask, setUpdatedTask] = useState("");
+  const [updatedAssignee, setUpdatedAssignee] = useState("");
 
   const dispatch = useDispatch("");
   const navigate = useNavigate();
@@ -27,6 +33,7 @@ const EditToDo = () => {
     fetchSingleTodo();
   }, []);
 
+  //DELETE ITEM
   const handleDelete = async (event) => {
     event.preventDefault();
     const { data: deleted } = await axios.delete(`/api/todos/${params.id}`, {
@@ -36,16 +43,50 @@ const EditToDo = () => {
     navigate("/");
   };
 
-  console.log(params);
+  //UPDATE ITEM
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+    const { data: updated } = await axios.put(`/api/todos/${params.id}`, {
+      taskName: updatedTask,
+      assignee: updatedAssignee,
+    });
+    dispatch(updateTodo(updated));
+    navigate("/");
+  };
+
+  const editTaskName = (event) => {
+    setUpdatedTask(event.target.value);
+  };
+
+  const editAssignee = (event) => {
+    setUpdatedAssignee(event.target.value);
+  };
 
   return (
     <div>
-      <p>
-        {selected.id}
-        {selected.taskName}
-        {selected.assignee}
-      </p>
-      <button onClick={handleDelete}>delete item {params.id}</button>
+      {selected.taskName ? (
+        <form id="todo-form" onSubmit={handleUpdate}>
+          <label htmlFor="taskName">Task Name: </label>
+          <input
+            name="taskName"
+            placeholder={selected.taskName}
+            onChange={editTaskName}
+          />
+
+          <label htmlFor="assignee">Assign To:</label>
+          <input
+            name="assignee"
+            placeholder={selected.assignee}
+            onChange={editAssignee}
+          />
+
+          <button type="submit">Submit</button>
+          <Link to="/">Cancel</Link>
+        </form>
+      ) : (
+        <p>Loading...</p>
+      )}
+      <button onClick={handleDelete}>delete this task</button>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes, Link } from "react-router-dom";
 import Todos from "./Todos";
 import CreateTodo from "./CreateTodo";
@@ -9,19 +9,13 @@ import EditToDo from "./EditToDo";
 
 const App = () => {
   const todos = useSelector((state) => state.todos.todos);
+
   const dispatch = useDispatch();
 
   //setting todos in main app via database
   const fetchTodos = async () => {
     const { data: todos } = await axios.get("/api/todos");
     dispatch(setTodos(todos));
-  };
-
-  const fetchSingleTodo = async () => {
-    const { data: select } = await axios.get(`/api/todos/${params.id}`);
-    console.log("in fetch", select); // logging properly
-    //sets our selected state to current select object
-    dispatch(setSelectedTodo(select));
   };
 
   useEffect(() => {

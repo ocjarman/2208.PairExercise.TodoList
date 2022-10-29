@@ -1,7 +1,6 @@
 import React from "react";
 import { connect, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import DeleteToDo from "./EditToDo";
 
 const Todos = () => {
   const todos = useSelector((state) => state.todos.todos);
