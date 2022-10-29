@@ -2,18 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // Set the initial state
 const initialState = {
-  selectedTodo: {}
+  selectedTodo: {},
 };
 
 // Set actions and settings specific to this state
 export const selectSlice = createSlice({
-  name: 'select',
+  name: "select",
   initialState,
   reducers: {
     setSelectedTodo: (state, action) => {
       state.todo = action.payload;
-    }
-  }
+    },
+  },
 });
 
 // Export everything needed to interact with it

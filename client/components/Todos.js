@@ -1,6 +1,7 @@
-import React from 'react';
-import { connect, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { connect, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import DeleteToDo from "./EditToDo";
 
 const Todos = () => {
   const todos = useSelector((state) => state.todos.todos);
@@ -11,7 +12,7 @@ const Todos = () => {
         return (
           <li key={todo.id}>
             <h2>
-              <Link to={`/todos/${todo.id}`}>Task: {todo.taskName}</Link>
+              <Link to={`/todos/${todo.id}`}>Task: {todo.taskName}</Link>{" "}
             </h2>
             <p>assigned by {todo.assignee}</p>
           </li>
@@ -22,7 +23,7 @@ const Todos = () => {
 };
 
 const mapStateToProps = ({ todos }) => ({
-  todos
+  todos,
 });
 
 export default connect(mapStateToProps)(Todos);
