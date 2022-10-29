@@ -11,11 +11,13 @@ export const selectSlice = createSlice({
   initialState,
   reducers: {
     setSelectedTodo: (state, action) => {
-      state.todo = action.payload;
+      //changed 'todo' to 'selectedTodo'
+      state.selectedTodo = action.payload;
     },
   },
 });
 
 // Export everything needed to interact with it
 export const { setSelectedTodo } = selectSlice.actions;
+
 export default selectSlice.reducer;
